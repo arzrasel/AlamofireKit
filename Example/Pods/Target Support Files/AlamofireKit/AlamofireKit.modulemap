@@ -1,0 +1,6 @@
+framework module AlamofireKit {
+  umbrella header "AlamofireKit-umbrella.h"
+
+  export *
+  module * { export * }
+}

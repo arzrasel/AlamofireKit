@@ -1,0 +1,16 @@
+PODS:
+  - AlamofireKit (0.1.0)
+
+DEPENDENCIES:
+  - AlamofireKit (from `../`)
+
+EXTERNAL SOURCES:
+  AlamofireKit:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  AlamofireKit: 9905a4f41629979eea860e210c91dc56dbc5befa
+
+PODFILE CHECKSUM: cd984712aebca2130f4ba1c488e183a75e0906ae
+
+COCOAPODS: 1.10.1
