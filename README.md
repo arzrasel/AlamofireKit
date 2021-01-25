@@ -27,9 +27,15 @@ it, simply add the following line to your Podfile:
 pod 'AlamofireKit'
 ```
 
+## Integration In Project
+
+```IntegrationInProject
+import AlamofireKit
+```
+
 ## HTTP Request
 
-```swift
+```swift.AlamofireKit.request
 AlamofireKit.request({ (success, data, error) in
     if success {
         guard let data = data else {
