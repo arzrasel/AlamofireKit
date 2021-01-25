@@ -11,6 +11,11 @@
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
 
 ## Requirements
+# Requirements 
+
+- iOS 13, macOS 10.15, tvOS 13, or watchOS 6
+- Swift 5.3
+- Xcode 12
 
 ## Installation
 
