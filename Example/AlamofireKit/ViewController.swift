@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AlamofireKit
 
 class ViewController: UIViewController {
 

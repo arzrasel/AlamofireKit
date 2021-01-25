@@ -4,7 +4,7 @@
 //
 //  Created by Rz Rasel on 2021-01-24.
 //
-// AlamofireKit Version = '0.1.0'
+// AlamofireKit Version = '0.1.1'
 //  Version = '0.1.0'
 
 import Foundation
@@ -22,13 +22,15 @@ public class AlamofireKit {
                                requestModifier: RequestModifier? = nil) {
         let request = AF.request(convertible, method: method, parameters: parameters, encoding: URLEncoding.default, headers: headers)
         request.responseJSON { response in
-            debugPrint("DEBUG_LOG_PRINT: response data url \(String(describing: response.request)) line: \(#line)")
-            debugPrint("DEBUG_LOG_PRINT: status code \(String(describing: response.response?.statusCode)) line: \(#line)")
+//            debugPrint("DEBUG_LOG_PRINT: response data url \(String(describing: response.request)) line: \(#line)")
+//            debugPrint("DEBUG_LOG_PRINT: status code \(String(describing: response.response?.statusCode)) line: \(#line)")
+            print("DEBUG_LOG_PRINT: response data url \(String(describing: response.request)) line: \(#line)")
+            print("DEBUG_LOG_PRINT: status code \(String(describing: response.response?.statusCode)) line: \(#line)")
             guard let responseData = response.value else {
-                debugPrint("DEBUG_LOG_PRINT: data error \(String(describing: response.error)) line: \(#line)")
+                print("DEBUG_LOG_PRINT: data error \(String(describing: response.error)) line: \(#line)")
                 return
             }
-            debugPrint("DEBUG_LOG_PRINT: data success \(responseData) line: \(#line)")
+            print("DEBUG_LOG_PRINT: data success \(responseData) line: \(#line)")
         }
     }
     public typealias Completion<T> = (_ success: Bool, _ data: T) -> Void
@@ -46,8 +48,8 @@ public class AlamofireKit {
                                           requestModifier: RequestModifier? = nil) {
         let request = AF.request(convertible, method: method, parameters: parameters, encoding: encoding, headers: headers)
         request.responseDecodable(of: dataModel.self) { (response) in
-            debugPrint("DEBUG_LOG_PRINT: request url \(String(describing: response.request)) line: \(#line)")
-            debugPrint("DEBUG_LOG_PRINT: status code \(String(describing: response.response?.statusCode)) line: \(#line)")
+            print("DEBUG_LOG_PRINT: request url \(String(describing: response.request)) line: \(#line)")
+            print("DEBUG_LOG_PRINT: status code \(String(describing: response.response?.statusCode)) line: \(#line)")
             guard let responseData = response.value else {
                 completion(false, nil, response.error)
                 return
