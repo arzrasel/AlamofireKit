@@ -1,3 +1,12 @@
+//
+//  AlamofireKit.swift
+//  AlamofireKit
+//
+//  Created by Rz Rasel on 2021-01-24.
+//
+// AlamofireKit Version = '0.1.0'
+//  Version = '0.1.0'
+
 import Foundation
 //import UIKit
 import Alamofire
