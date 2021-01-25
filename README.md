@@ -27,6 +27,21 @@ it, simply add the following line to your Podfile:
 pod 'AlamofireKit'
 ```
 
+## HTTP Request
+
+```swift
+AlamofireKit.request({ (success, data, error) in
+    if success {
+        guard let data = data else {
+            return
+        }
+        self.apiModel = data
+    } else {
+        print("ERROR: \(String(describing: error))")
+    }
+}, dataModel: ApiModel.self, "https://api-url", method: .get, parameters: parameters)
+```
+
 ## Author
 
 Rz Rasel
