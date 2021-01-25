@@ -23,7 +23,7 @@ pod 'AlamofireKit'
 
 ## Author
 
-Rashed, rashedgit@gmail.com
+Rz Rasel
 
 ## License
 
