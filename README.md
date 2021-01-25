@@ -5,16 +5,17 @@
 [![License](https://img.shields.io/cocoapods/l/AlamofireKit.svg?style=flat)](https://cocoapods.org/pods/AlamofireKit)
 [![Platform](https://img.shields.io/cocoapods/p/AlamofireKit.svg?style=flat)](https://cocoapods.org/pods/AlamofireKit)
 [![GitHub release](https://img.shields.io/github/tag/arzrasel/AlamofireKit.svg)](https://github.com/arzrasel/AlamofireKit/releases)
+[![Swift](https://img.shields.io/badge/Swift-5.0-orange.svg)](https://swift.org)
+[![Xcode](https://img.shields.io/badge/Xcode-11.4-blue.svg)](https://developer.apple.com/xcode)
 
 ## Example
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
 
 ## Requirements
-# Requirements 
 
-- iOS 13, macOS 10.15, tvOS 13, or watchOS 6
-- Swift 5.3
+- iOS 11
+- Swift 5
 - Xcode 12
 
 ## Installation
