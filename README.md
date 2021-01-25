@@ -4,6 +4,7 @@
 [![Version](https://img.shields.io/cocoapods/v/AlamofireKit.svg?style=flat)](https://cocoapods.org/pods/AlamofireKit)
 [![License](https://img.shields.io/cocoapods/l/AlamofireKit.svg?style=flat)](https://cocoapods.org/pods/AlamofireKit)
 [![Platform](https://img.shields.io/cocoapods/p/AlamofireKit.svg?style=flat)](https://cocoapods.org/pods/AlamofireKit)
+[![GitHub release](https://img.shields.io/github/tag/arzrasel/AlamofireKit.svg)](https://github.com/arzrasel/AlamofireKit/releases)
 
 ## Example
 
