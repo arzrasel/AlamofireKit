@@ -35,7 +35,7 @@ import AlamofireKit
 
 ## HTTP Request
 
-```swift.AlamofireKit.request
+```swiftAlamofireKitrequest
 AlamofireKit.request({ (success, data, error) in
     if success {
         guard let data = data else {
