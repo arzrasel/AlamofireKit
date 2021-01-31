@@ -25,6 +25,8 @@ it, simply add the following line to your Podfile:
 
 ```ruby
 pod 'AlamofireKit'
+or
+pod 'AlamofireKit', '~> 0.1'
 ```
 
 ## Integration In Project
