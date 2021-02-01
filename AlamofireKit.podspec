@@ -16,7 +16,7 @@
 #   * pod lib lint --allow-warnings
 #   * Push to git and release
 #   * pod trunk push --allow-warnings ORRR>> pod trunk push AlamofireKit.podspec --allow-warnings
-# AlamofireKit Version = 0.1.1
+# AlamofireKit Version - 0.1.1
 
 
 Pod::Spec.new do |s|
@@ -44,9 +44,9 @@ Pod::Spec.new do |s|
   #s.ios.deployment_target = '9.0'
 
   s.ios.deployment_target = '11.0'
-  
+
   s.source_files = 'Source/**/*.swift'
-  
+
   # s.resource_bundles = {
   #   'AlamofireKit' => ['AlamofireKit/Assets/*.png']
   # }
