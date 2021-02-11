@@ -55,7 +55,7 @@ AlamofireKit.request({ (success, data, error) in
 
 ## Author
 
-Rz Rasel
+Md. Rashed - Uz - Zaman (Rz Rasel)
 
 ## License
 

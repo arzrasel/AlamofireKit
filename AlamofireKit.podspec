@@ -16,12 +16,12 @@
 #   * pod lib lint --allow-warnings
 #   * Push to git and release
 #   * pod trunk push --allow-warnings ORRR>> pod trunk push AlamofireKit.podspec --allow-warnings
-# AlamofireKit Version - 0.1.1
+# AlamofireKit Version - 0.1.1.01
 
 
 Pod::Spec.new do |s|
   s.name             = 'AlamofireKit'
-  s.version          = '0.1.1'
+  s.version          = '0.1.1.01'
   s.summary          = 'A short description of AlamofireKit.'
 
 # This description is used to generate tags and improve search results.
@@ -37,7 +37,7 @@ Pod::Spec.new do |s|
   s.homepage         = 'https://github.com/arzrasel/AlamofireKit'
   # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
-  s.author           = { 'Rz Rasel' => 'rashedgit@gmail.com' }
+  s.author           = { 'Md. Rashed - Uz - Zaman (Rz Rasel)' => 'rashedgit@gmail.com' }
   s.source           = { :git => 'https://github.com/arzrasel/AlamofireKit.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
