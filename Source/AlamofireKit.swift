@@ -197,7 +197,7 @@ extension AlamofireKit {
 //        imageData = imageView.image?.jpegData(compressionQuality: imageQuality)
 //        imageData = uiImage?.jpegData(compressionQuality: imageQuality)
 //        imageData = UIImageJPEGRepresentation(imageData, imageQuality)
-        #if swift(>=5.3)
+        #if swift(>=4.2)
             imageData = uiImage.jpegData(compressionQuality: imageQuality)
         #else
             imageData = UIImageJPEGRepresentation(uiImage, imageQuality)
