@@ -50,3 +50,18 @@ extension AVFileType {
         return "None"
     }
 }
+extension NSURL {
+    public func mimeType() -> String {
+        return MimeType(ext: self.pathExtension)
+    }
+}
+extension NSString {
+    public func mimeType() -> String {
+        return MimeType(ext: self.pathExtension)
+    }
+}
+extension String {
+    public func mimeType() -> String {
+        return (self as NSString).mimeType()
+    }
+}

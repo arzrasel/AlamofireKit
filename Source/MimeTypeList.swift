@@ -1,6 +1,6 @@
 //
 //  MimeTypeList.swift
-//  EasySwiftUIKit
+//  AlamofireKit
 //
 //  Created by Rz Rasel on 2021-02-13
 //
