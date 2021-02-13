@@ -10,16 +10,16 @@ import UIKit
 
 extension NSURL {
     public func getMimeType() -> String {
-        return MimeType(ext: self.pathExtension)
+        return GetMimeType(ext: self.pathExtension)
     }
 }
 extension NSString {
     public func getMimeType() -> String {
-        return MimeType(ext: self.pathExtension)
+        return GetMimeType(ext: self.pathExtension)
     }
 }
 extension String {
     public func getMimeType() -> String {
-        return (self as NSString).mimeType()
+        return (self as NSString).getMimeType()
     }
 }

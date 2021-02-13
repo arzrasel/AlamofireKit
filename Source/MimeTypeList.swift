@@ -116,7 +116,7 @@ internal let mimeTypes = [
     "avi": "video/x-msvideo"
 ]
 
-internal func MimeType(ext: String?) -> String {
+internal func GetMimeType(ext: String?) -> String {
     let lowercase_ext: String = ext!.lowercased()
     if ext != nil && mimeTypes.contains(where: { $0.0 == lowercase_ext }) {
         return mimeTypes[lowercase_ext]!
