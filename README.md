@@ -1,7 +1,5 @@
 # AlamofireKit
 
-### AlamofireKit latest version - 0.1.1.01 and upcoming next version - 0.1.1.02
-
 [![Rz Rasel](https://raw.githubusercontent.com/arzrasel/svg/main/rz-rasel-blue.svg)](https://github.com/rzrasel)
 [![CI Status](https://img.shields.io/travis/Rashed/AlamofireKit.svg?style=flat)](https://travis-ci.org/Rashed/AlamofireKit)
 [![Version](https://img.shields.io/cocoapods/v/AlamofireKit.svg?style=flat)](https://cocoapods.org/pods/AlamofireKit)
@@ -10,6 +8,8 @@
 [![GitHub release](https://img.shields.io/github/tag/arzrasel/AlamofireKit.svg)](https://github.com/arzrasel/AlamofireKit/releases)
 [![Swift](https://img.shields.io/badge/Swift-5.0-orange.svg)](https://swift.org)
 [![Xcode](https://img.shields.io/badge/Xcode-11.4-blue.svg)](https://developer.apple.com/xcode)
+
+### AlamofireKit latest version - 0.1.1.01 and upcoming next version - 0.1.1.02
 
 ## Example
 
