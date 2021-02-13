@@ -197,7 +197,11 @@ extension AlamofireKit {
 //        imageData = imageView.image?.jpegData(compressionQuality: imageQuality)
 //        imageData = uiImage?.jpegData(compressionQuality: imageQuality)
 //        imageData = UIImageJPEGRepresentation(imageData, imageQuality)
-        imageData = uiImage!.jpegData(compressionQuality: imageQuality)!
+        #if swift(>=5.3)
+            imageData = uiImage.jpegData(compressionQuality: imageQuality)
+        #else
+            imageData = UIImageJPEGRepresentation(uiImage, imageQuality)
+        #endif
         //
         AF.upload(
             multipartFormData: { multipartFormData in
