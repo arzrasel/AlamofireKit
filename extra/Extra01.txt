@@ -1,0 +1,184 @@
+@IBAction func onTapBtnUploadImage(_ sender: Any) {
+    ImagePickerManager().pickImage(self){image in
+        self.userImageButton.setImage(image, for: .normal)
+        self.userImageButton.layer.cornerRadius = 40
+        self.userImageButton.layer.masksToBounds = true
+        print("request to change image")
+//            let uploadImage = UploadImage()
+//            //            uploadImage.addHeader(key: "Authorization", value: self.rawUserLoginInfo.token)
+//            uploadImage.addHeader(headers: ["Authorization": self.rawUserLoginInfo.token])
+//            uploadImage.addParameter(key: "type", value: "AVATAR")
+//            uploadImage.withURL(url: "http://10.10.0.5:3333/patient")
+//            uploadImage.methodType(methodType: .post)
+//            uploadImage.withImageName(imageName: "file")
+//            uploadImage.withImageFileName(imageFileName: "file.jpg")
+//            uploadImage.withUIButtonView(uiButton: self.userImageButton, imageQuality: 100)
+//            uploadImage.uploadImage({success, data, error in
+//                if success {
+//                    print("DATA: \(data?.jsonString())")
+//                }
+//            }, dataModel: ModelApiRootUploadImage.self, "http://10.10.0.5:3333/patient")
+        let alamofireKit = AlamofireKit()
+            .headers(headers: ["Authorization": self.rawUserLoginInfo.token])
+            .addParameter(key: "type", value: "AVATAR")
+            .method(method: .post)
+            .withImageName(imageName: "file")
+            .withImageFileName(imageFileName: "file.jpg")
+            .withUIButton(uiButton: self.userImageButton, imageQuality: 100)
+        alamofireKit.uploadImage({success, data, error in
+            if success {
+                print("DATA: \(data?.jsonString())")
+            }
+        }, dataModel: ModelApiRootUploadImage.self, "http://10.10.0.5:3333/patient", cropSize: CGSize(width: 512, height: 512))
+    }
+}
+//
+//
+//
+//
+public class UploadImage {
+    private var method: HTTPMethod = .post
+    //    private var headers: [HTTPHeader]!
+    private var headers: HTTPHeaders!
+    private var headerList: [String: String]!
+    private var parameters: Parameters!
+    private var httpURL: String!
+    //
+    private var imageQuality: CGFloat!
+    private var imageFileName: String!
+    private var imageName: String!
+    private var imageView: UIImageView!
+    private var imageData: Data!
+    private var mimeType: String!
+    //
+
+    public init() {
+        headers = nil
+        headerList = [String: String]()
+        headerList.removeAll()
+        parameters = [String: String]()
+        parameters.removeAll()
+    }
+    //    public func addHeader(key: String, value: String) {
+    //        headerList[key] = value
+    //        //        headers = [
+    //        //            "Content-type": "multipart/form-data",
+    //        //            "Accept": "application/json"
+    //        //        ]
+    //    }
+    public func addHeader(headers argHTTPHeaders: HTTPHeaders) {
+        headers = argHTTPHeaders
+        headers["Content-type"] = "multipart/form-data"
+    }
+    public func addParameter(key: String, value: String) {
+        parameters[key] = value
+    }
+    public func withURL(url argURL: String) {
+        httpURL = argURL
+    }
+    public func methodType(methodType argHTTPMethod: HTTPMethod) {
+        method = argHTTPMethod
+    }
+    public func withImageName(imageName argImageName: String) {
+        imageName = argImageName
+    }
+    public func withImageFileName(imageFileName argImageFileName: String) {
+        imageFileName = argImageFileName
+    }
+    public func withUIImageView(uiImageView: UIImageView, imageQuality argImageQuality: CGFloat) {
+        imageView = uiImageView
+        imageQuality = argImageQuality
+    }
+    public func withUIButtonView(uiButton: UIButton, imageQuality argImageQuality: CGFloat) {
+        var imageFromButton: UIImage = uiButton.image(for: UIControl.State.normal)!
+        imageFromButton = imageFromButton.crop(cropTo: CGSize(width: 1024, height: 1024))
+        imageView = UIImageView(image: imageFromButton)
+        imageQuality = argImageQuality
+    }
+    //START uploadImage
+    public func uploadImage<T: Decodable>(_ completion: @escaping (_ success: Bool, _ data: T?, _ error: Error?) -> Void, dataModel: T.Type, _ convertible: URLConvertible) {
+        //        headerList["Content-type"] = "multipart/form-data"
+        //        for (key, value) in headerList {
+        //            headers[key] = value as? String
+        //        }
+        print("DEBUG_PRINT: FINAL HEADERS \(String(describing: headers))")
+        print("DEBUG_PRINT: FINAL PARAMS \(String(describing: parameters))")
+        print("DEBUG_PRINT: FINAL URL \(String(describing: convertible))")
+        if imageName == nil {
+            print("Error: upload image name is empty")
+            return
+        }
+        if imageFileName == nil {
+            print("Error: upload image file name is empty")
+            return
+        }
+        //
+        mimeType = imageFileName.mimeType()
+        //        var eImageType = EImageType.byName(name: mimeType)
+        imageData = imageView.image?.jpegData(compressionQuality: imageQuality)
+        //
+        AF.upload(
+            multipartFormData: { multipartFormData in
+                for (key, value) in self.parameters {
+                    if let temp = value as? String {
+                        multipartFormData.append(temp.data(using: .utf8)!, withName: key)
+                    }
+                    if value is Int {
+                        multipartFormData.append("(temp)".data(using: .utf8)!, withName: key)
+                    }
+                    if let temp = value as? NSArray {
+                        temp.forEach({ element in
+                            let keyObj = key + "[]"
+                            if let string = element as? String {
+                                multipartFormData.append(string.data(using: .utf8)!, withName: keyObj)
+                            } else
+                            if element is Int {
+                                let value = "(num)"
+                                multipartFormData.append(value.data(using: .utf8)!, withName: keyObj)
+                            }
+                        })
+                    }
+                }
+                multipartFormData.append(self.imageData, withName: self.imageName, fileName: self.imageFileName, mimeType: self.mimeType)
+            },
+            to: httpURL, method: method, headers: headers)
+            //            .validate(statusCode: 200..<300)
+            .response {result in
+//                print("DEBUG_PRINT: FINAL - \(result)")
+                switch result.result {
+                case .success(_):
+//                    print("DEBUG_PRINT: Response after upload Img: \(result.data?.jsonString())")
+                    if let jsonString = String(data: result.data!, encoding: String.Encoding.utf8) {
+                       print("DEBUG_PRINT: response after upload image: \(jsonString)")
+                    }
+                    do {
+                        let data = try JSONDecoder().decode(dataModel.self, from: result.data!)
+                        completion(true, data, nil)
+                    } catch let error {
+                        completion(false, nil, error)
+                    }
+                case .failure(let error):
+                    completion(false, nil, error)
+                }
+//                switch resp.result{
+//                case .success(let upload, _, _ ):
+//                    print("Response after upload Img: \(resp.result)")
+//                case .failure(let error):
+                //                    print(error)
+//                }
+            }
+        //END uploadImage
+    }
+    public enum EImageType: String, CaseIterable, Codable {
+        case IMAGE_JPG = "image/jpeg"
+        case IMAGE_PNG = "image/png"
+        //        case IMAGE_JPEG = "image/jpeg"
+        //
+        case NONE = "none"
+        //
+        static func byName(name label: String) -> EImageType {
+            return self.allCases.first{ "\($0.rawValue)" == label } ?? .NONE
+        }
+    }
+    //https://github.com/Alamofire/Alamofire/issues/2942
+}
