@@ -10,6 +10,7 @@
 import Foundation
 import UIKit
 import Alamofire
+import EasySwiftUIKit
 
 public class AlamofireKit {
     private var method: HTTPMethod = .post
