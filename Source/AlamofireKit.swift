@@ -195,7 +195,9 @@ extension AlamofireKit {
         mimeType = imageFileName.getMimeType()
         //        var eImageType = EImageType.byName(name: mimeType)
 //        imageData = imageView.image?.jpegData(compressionQuality: imageQuality)
-        imageData = uiImage?.jpegData(compressionQuality: imageQuality)
+//        imageData = uiImage?.jpegData(compressionQuality: imageQuality)
+//        imageData = UIImageJPEGRepresentation(imageData, imageQuality)
+        imageData = imageData!.jpegData(compressionQuality: self.imageQuality)!
         //
         AF.upload(
             multipartFormData: { multipartFormData in
