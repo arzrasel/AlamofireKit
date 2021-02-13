@@ -56,4 +56,5 @@ Pod::Spec.new do |s|
   # s.dependency 'AFNetworking', '~> 2.3'
   s.frameworks = 'UIKit'
   s.dependency 'Alamofire', '~> 5.1'
+  s.dependency 'EasySwiftUIKit', '~> 1.0'
 end
