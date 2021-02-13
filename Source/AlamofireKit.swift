@@ -172,6 +172,7 @@ extension AlamofireKit {
     public func uploadImage<T: Decodable>(_ completion: @escaping (_ success: Bool, _ data: T?, _ error: Error?) -> Void, dataModel: T.Type, _ convertible: URLConvertible, cropSize: CGSize) {
 //        imageView = UIImageView(image: imageView.image?.crop(cropTo: cropSize))
         uiImage = uiImage.resizeImage(resizeTo: cropSize)
+        uploadImage(completion, dataModel: dataModel, convertible)
     }
     //START uploadImage
     public func uploadImage<T: Decodable>(_ completion: @escaping (_ success: Bool, _ data: T?, _ error: Error?) -> Void, dataModel: T.Type, _ convertible: URLConvertible) {
