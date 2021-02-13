@@ -56,16 +56,18 @@ AlamofireKit.request({ (success, data, error) in
 ```
 
 ```swiftAlamofireKitUploadImageRegualr
-AlamofireKit.uploadImage({ (success, data, error) in
+let alamofireKit = AlamofireKit()
+    .headers(headers: ["Authorization": self.rawUserLoginInfo.token])
+    .addParameter(key: "type", value: "AVATAR")
+    .method(method: .post)
+    .withImageName(imageName: "file")
+    .withImageFileName(imageFileName: "file.jpg")
+    .withUIButton(uiButton: self.userImageButton, imageQuality: 100)
+alamofireKit.uploadImage({success, data, error in
     if success {
-        guard let data = data else {
-            return
-        }
-        self.apiModel = data
-    } else {
-        print("ERROR: \(String(describing: error))")
+        print("DATA: \(data?.jsonString())")
     }
-}, dataModel: ApiModel.self, "https://api-url", method: .get, parameters: parameters)
+}, dataModel: ModelApiRootUploadImage.self, "https://api-url", cropSize: CGSize(width: 512, height: 512))
 ```
 
 ## Author
