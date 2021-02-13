@@ -17,7 +17,7 @@ public class AlamofireKit {
     private var headers: HTTPHeaders!
     private var headerList: [String: String]!
     private var parameters: Parameters!
-    private var httpURL: String!
+    private var httpURL: URLConvertible!
     //
     private var imageQuality: CGFloat!
     private var imageFileName: String!
@@ -45,7 +45,7 @@ public class AlamofireKit {
         parameters[key] = value
         return self
     }
-    public func withURL(url argURL: String) -> AlamofireKit {
+    public func withURL(url argURL: URLConvertible) -> AlamofireKit {
         httpURL = argURL
         return self
     }
@@ -227,7 +227,10 @@ extension AlamofireKit {
                 //                print("DEBUG_PRINT: FINAL - \(result)")
                 switch result.result {
                 case .success(_):
-                    print("DEBUG_PRINT: Response after upload Img: \(result.data?.jsonString())")
+//                    print("DEBUG_PRINT: Response after upload Img: \(result.data?.jsonString())")
+                    if let jsonString = String(data: result.data, encoding: String.Encoding.utf8) {
+                       print("DEBUG_PRINT: response after upload image: \(jsonString)")
+                    }
                     do {
                         let data = try JSONDecoder().decode(dataModel.self, from: result.data!)
                         completion(true, data, nil)
@@ -258,61 +261,4 @@ extension AlamofireKit {
         }
     }
     //https://github.com/Alamofire/Alamofire/issues/2942
-}
-extension UIImage {
-    public func resized(resizedTo: CGSize) -> UIImage {
-        return crop(to: resizedTo)
-    }
-    public func crop(cropTo: CGSize) -> UIImage {
-        
-        guard let cgimage = self.cgImage else { return self }
-        let contextImage: UIImage = UIImage(cgImage: cgimage)
-        guard let newCgImage = contextImage.cgImage else { return self }
-        
-        let contextSize: CGSize = contextImage.size
-        //Set to square
-        var posX: CGFloat = 0.0
-        var posY: CGFloat = 0.0
-        let cropAspect: CGFloat = to.width / to.height
-        
-        var cropWidth: CGFloat = to.width
-        var cropHeight: CGFloat = to.height
-        
-        if to.width > to.height { //Landscape
-            cropWidth = contextSize.width
-            cropHeight = contextSize.width / cropAspect
-            posY = (contextSize.height - cropHeight) / 2
-        } else if to.width < to.height { //Portrait
-            cropHeight = contextSize.height
-            cropWidth = contextSize.height * cropAspect
-            posX = (contextSize.width - cropWidth) / 2
-        } else { //Square
-            if contextSize.width >= contextSize.height { //Square on landscape (or square)
-                cropHeight = contextSize.height
-                cropWidth = contextSize.height * cropAspect
-                posX = (contextSize.width - cropWidth) / 2
-            }else{ //Square on portrait
-                cropWidth = contextSize.width
-                cropHeight = contextSize.width / cropAspect
-                posY = (contextSize.height - cropHeight) / 2
-            }
-        }
-        
-        let rect: CGRect = CGRect(x: posX, y: posY, width: cropWidth, height: cropHeight)
-        
-        // Create bitmap image from context using the rect
-        guard let imageRef: CGImage = newCgImage.cropping(to: rect) else { return self}
-        
-        // Create a new image based on the imageRef and rotate back to the original orientation
-        let cropped: UIImage = UIImage(cgImage: imageRef, scale: self.scale, orientation: self.imageOrientation)
-        
-        UIGraphicsBeginImageContextWithOptions(to, false, self.scale)
-        cropped.draw(in: CGRect(x: 0, y: 0, width: to.width, height: to.height))
-        let resized = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        
-        return resized ?? self
-//        let size = CGSize(width: 300, height: 200)
-//        let image = UIImage(named: "my_great_photo")?.crop(size)
-    }
 }
