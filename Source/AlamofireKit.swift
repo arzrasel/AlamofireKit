@@ -196,7 +196,7 @@ extension AlamofireKit {
         mimeType = imageFileName.mimeType()
         //        var eImageType = EImageType.byName(name: mimeType)
 //        imageData = imageView.image?.jpegData(compressionQuality: imageQuality)
-        imageData = uiImage.jpegData(compressionQuality: imageQuality)
+        imageData = uiImage?.jpegData(compressionQuality: imageQuality)
         //
         AF.upload(
             multipartFormData: { multipartFormData in
@@ -229,7 +229,7 @@ extension AlamofireKit {
                 switch result.result {
                 case .success(_):
 //                    print("DEBUG_PRINT: Response after upload Img: \(result.data?.jsonString())")
-                    if let jsonString = String(data: result.data, encoding: String.Encoding.utf8) {
+                    if let jsonString = String(data: result.data!, encoding: String.Encoding.utf8) {
                        print("DEBUG_PRINT: response after upload image: \(jsonString)")
                     }
                     do {
