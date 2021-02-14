@@ -168,18 +168,18 @@ extension AlamofireKit {
         return self
     }
     //
-    private func onLoadImageJpg() {
-        #if swift(>=4.2)
-        imageData = uiImage.pngData()
-        #else
-        imageData = UIImageJPEGRepresentation(uiImage, imageQuality)
-        #endif
-    }
     private func onLoadImagePng() {
         #if swift(>=4.2)
         imageData = uiImage.pngData()
         #else
+        imageData = UIImagePNGRepresentation(uiImage)
+        #endif
+    }
+    private func onLoadImageJpg() {
+        #if swift(>=4.2)
         imageData = uiImage.jpegData(compressionQuality: imageQuality)
+        #else
+        imageData = UIImageJPEGRepresentation(uiImage, imageQuality)
         #endif
     }
     //
