@@ -168,21 +168,19 @@ extension AlamofireKit {
         return self
     }
     //
-    private func onLoadImageDownVersion() {
-        let eImageType = EImageType.byName(name: mimeType)
-        if eImageType == EImageType.IMAGE_PNG {
-            imageData = uiImage.pngData()
-        } else if eImageType == EImageType.IMAGE_JPG {
-            imageData = UIImageJPEGRepresentation(uiImage, imageQuality)
-        }
+    private func onLoadImageJpg() {
+        #if swift(>=4.2)
+        imageData = uiImage.pngData()
+        #else
+        imageData = UIImageJPEGRepresentation(uiImage, imageQuality)
+        #endif
     }
-    private func onLoadImageUpVersion() {
-        let eImageType = EImageType.byName(name: mimeType)
-        if eImageType == EImageType.IMAGE_PNG {
-            imageData = uiImage.pngData()
-        } else if eImageType == EImageType.IMAGE_JPG {
-            imageData = uiImage.jpegData(compressionQuality: imageQuality)
-        }
+    private func onLoadImagePng() {
+        #if swift(>=4.2)
+        imageData = uiImage.pngData()
+        #else
+        imageData = uiImage.jpegData(compressionQuality: imageQuality)
+        #endif
     }
     //
     public func uploadImage<T: Decodable>(_ completion: @escaping (_ success: Bool, _ data: T?, _ error: Error?) -> Void, dataModel: T.Type, _ convertible: URLConvertible, cropSize: CGSize) {
@@ -215,11 +213,17 @@ extension AlamofireKit {
         //        imageData = imageView.image?.jpegData(compressionQuality: imageQuality)
         //        imageData = uiImage?.jpegData(compressionQuality: imageQuality)
         //        imageData = UIImageJPEGRepresentation(imageData, imageQuality)
-        #if swift(>=4.2)
-        onLoadImageUpVersion()
-        #else
-        onLoadImageDownVersion()
-        #endif
+//        #if swift(>=4.2)
+//        onLoadImageUpVersion()
+//        #else
+//        onLoadImageDownVersion()
+//        #endif
+        let eImageType = EImageType.byName(name: mimeType)
+        if eImageType == EImageType.IMAGE_PNG {
+            onLoadImagePng()
+        } else if eImageType == EImageType.IMAGE_JPG {
+            onLoadImageJpg()
+        }
         //
         AF.upload(
             multipartFormData: { multipartFormData in
