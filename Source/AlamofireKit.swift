@@ -167,13 +167,7 @@ extension AlamofireKit {
         imageQuality = argImageQuality
         return self
     }
-    //uiImage
     //
-    public func uploadImage<T: Decodable>(_ completion: @escaping (_ success: Bool, _ data: T?, _ error: Error?) -> Void, dataModel: T.Type, _ convertible: URLConvertible, cropSize: CGSize) {
-        //        imageView = UIImageView(image: imageView.image?.crop(cropTo: cropSize))
-        uiImage = uiImage.resizeImage(resizeTo: cropSize)
-        uploadImage(completion, dataModel: dataModel, convertible)
-    }
     private func onLoadImageDownVersion() {
         let eImageType = EImageType.byName(name: mimeType)
         if eImageType == EImageType.IMAGE_PNG {
@@ -189,6 +183,12 @@ extension AlamofireKit {
         } else if eImageType == EImageType.IMAGE_JPG {
             imageData = uiImage.jpegData(compressionQuality: imageQuality)
         }
+    }
+    //
+    public func uploadImage<T: Decodable>(_ completion: @escaping (_ success: Bool, _ data: T?, _ error: Error?) -> Void, dataModel: T.Type, _ convertible: URLConvertible, cropSize: CGSize) {
+        //        imageView = UIImageView(image: imageView.image?.crop(cropTo: cropSize))
+        uiImage = uiImage.resizeImage(resizeTo: cropSize)
+        uploadImage(completion, dataModel: dataModel, convertible)
     }
     //START uploadImage
     public func uploadImage<T: Decodable>(_ completion: @escaping (_ success: Bool, _ data: T?, _ error: Error?) -> Void, dataModel: T.Type, _ convertible: URLConvertible) {
