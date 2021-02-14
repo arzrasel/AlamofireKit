@@ -154,15 +154,15 @@ extension AlamofireKit {
         return self
     }
     public func withUIImage(uiImageView: UIImageView, imageQuality argImageQuality: CGFloat) -> AlamofireKit {
-//        imageView = uiImageView
+        //        imageView = uiImageView
         uiImage = uiImageView.image
         imageQuality = argImageQuality
         return self
     }
     public func withUIButton(uiButton: UIButton, imageQuality argImageQuality: CGFloat) -> AlamofireKit {
-//        var imageFromButton: UIImage = uiButton.image(for: UIControl.State.normal)!
-////        imageFromButton = imageFromButton.crop(to: CGSize(width: 1024, height: 1024))
-//        imageView = UIImageView(image: imageFromButton)
+        //        var imageFromButton: UIImage = uiButton.image(for: UIControl.State.normal)!
+        ////        imageFromButton = imageFromButton.crop(to: CGSize(width: 1024, height: 1024))
+        //        imageView = UIImageView(image: imageFromButton)
         uiImage = uiButton.image(for: UIControl.State.normal)!
         imageQuality = argImageQuality
         return self
@@ -170,7 +170,7 @@ extension AlamofireKit {
     //uiImage
     //
     public func uploadImage<T: Decodable>(_ completion: @escaping (_ success: Bool, _ data: T?, _ error: Error?) -> Void, dataModel: T.Type, _ convertible: URLConvertible, cropSize: CGSize) {
-//        imageView = UIImageView(image: imageView.image?.crop(cropTo: cropSize))
+        //        imageView = UIImageView(image: imageView.image?.crop(cropTo: cropSize))
         uiImage = uiImage.resizeImage(resizeTo: cropSize)
         uploadImage(completion, dataModel: dataModel, convertible)
     }
@@ -192,16 +192,19 @@ extension AlamofireKit {
             print("Error: upload image file name is empty")
             return
         }
+        imageFileName = imageFileName + ".png"
         //
         mimeType = imageFileName.getMimeType()
         //        var eImageType = EImageType.byName(name: mimeType)
-//        imageData = imageView.image?.jpegData(compressionQuality: imageQuality)
-//        imageData = uiImage?.jpegData(compressionQuality: imageQuality)
-//        imageData = UIImageJPEGRepresentation(imageData, imageQuality)
+        //        imageData = imageView.image?.jpegData(compressionQuality: imageQuality)
+        //        imageData = uiImage?.jpegData(compressionQuality: imageQuality)
+        //        imageData = UIImageJPEGRepresentation(imageData, imageQuality)
         #if swift(>=4.2)
-            imageData = uiImage.jpegData(compressionQuality: imageQuality)
+        //            imageData = uiImage.jpegData(compressionQuality: imageQuality)
+        imageData = uiImage.pngData()
         #else
-            imageData = UIImageJPEGRepresentation(uiImage, imageQuality)
+        //            imageData = UIImageJPEGRepresentation(uiImage, imageQuality)
+        imageData = UIImagePNGRepresentation(uiImage)
         #endif
         //
         AF.upload(
@@ -234,9 +237,9 @@ extension AlamofireKit {
                 //                print("DEBUG_PRINT: FINAL - \(result)")
                 switch result.result {
                 case .success(_):
-//                    print("DEBUG_PRINT: Response after upload Img: \(result.data?.jsonString())")
+                    //                    print("DEBUG_PRINT: Response after upload Img: \(result.data?.jsonString())")
                     if let jsonString = String(data: result.data!, encoding: String.Encoding.utf8) {
-                       print("DEBUG_PRINT: response after upload image: \(jsonString)")
+                        print("DEBUG_PRINT: response after upload image: \(jsonString)")
                     }
                     do {
                         let data = try JSONDecoder().decode(dataModel.self, from: result.data!)
