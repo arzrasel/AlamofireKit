@@ -174,6 +174,22 @@ extension AlamofireKit {
         uiImage = uiImage.resizeImage(resizeTo: cropSize)
         uploadImage(completion, dataModel: dataModel, convertible)
     }
+    private func onLoadImageDownVersion() {
+        let eImageType = EImageType.byName(name: mimeType)
+        if eImageType == EImageType.IMAGE_PNG {
+            imageData = uiImage.pngData()
+        } else if eImageType == EImageType.IMAGE_JPG {
+            imageData = UIImageJPEGRepresentation(uiImage, imageQuality)
+        }
+    }
+    private func onLoadImageUpVersion() {
+        let eImageType = EImageType.byName(name: mimeType)
+        if eImageType == EImageType.IMAGE_PNG {
+            imageData = uiImage.pngData()
+        } else if eImageType == EImageType.IMAGE_JPG {
+            imageData = uiImage.jpegData(compressionQuality: imageQuality)
+        }
+    }
     //START uploadImage
     public func uploadImage<T: Decodable>(_ completion: @escaping (_ success: Bool, _ data: T?, _ error: Error?) -> Void, dataModel: T.Type, _ convertible: URLConvertible) {
         //        headerList["Content-type"] = "multipart/form-data"
@@ -192,7 +208,7 @@ extension AlamofireKit {
             print("Error: upload image file name is empty")
             return
         }
-        imageFileName = imageFileName + ".png"
+//        imageFileName = imageFileName + ".png"
         //
         mimeType = imageFileName.getMimeType()
         //        var eImageType = EImageType.byName(name: mimeType)
@@ -200,11 +216,9 @@ extension AlamofireKit {
         //        imageData = uiImage?.jpegData(compressionQuality: imageQuality)
         //        imageData = UIImageJPEGRepresentation(imageData, imageQuality)
         #if swift(>=4.2)
-        //            imageData = uiImage.jpegData(compressionQuality: imageQuality)
-        imageData = uiImage.pngData()
+        onLoadImageUpVersion()
         #else
-        //            imageData = UIImageJPEGRepresentation(uiImage, imageQuality)
-        imageData = UIImagePNGRepresentation(uiImage)
+        onLoadImageDownVersion()
         #endif
         //
         AF.upload(
@@ -267,7 +281,7 @@ extension AlamofireKit {
         case NONE = "none"
         //
         static func byName(name label: String) -> EImageType {
-            return self.allCases.first{ "\($0.rawValue)" == label } ?? .NONE
+            return self.allCases.first{ "\($0.rawValue.lowercased())" == label.lowercased() } ?? .NONE
         }
     }
     //https://github.com/Alamofire/Alamofire/issues/2942
