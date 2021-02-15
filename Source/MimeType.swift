@@ -90,6 +90,13 @@ internal func ownDebugLog(object: Any, message: String, functionName: String = #
     let className = (fileName as NSString).lastPathComponent
     print("DEBUG_LOG_PRINT: " + message + " <\(className)> \(functionName) [\(lineNumber)] | \(object)")
 }
+public func debugLog(object: Any, message: String, functionName: String = #function, fileName: String = #file, lineNumber: Int = #line) {
+    if ownIsDebug == false {
+        return
+    }
+    let className = (fileName as NSString).lastPathComponent
+    print("DEBUG_LOG_PRINT: " + message + " <\(className)> \(functionName) [\(lineNumber)] | \(object)")
+}
 //#if swift(>=5.3)
 //print("Hello, Swift 5.3")
 //
