@@ -296,34 +296,6 @@ extension AlamofireKit {
 }
 extension AlamofireKit {
     public func requestJSON() {
-        do {
-            let jsonAddToCart = try JSONSerialization.jsonObject(with: dataAddToCart, options: [])
-            let parameters: [String: Any] = [
-                "cart_items": jsonAddToCart
-            ]
-            let headers: HTTPHeaders = [
-                AppConstant.API_KEY_TOKEN.AUTHORIZATION: argAccessToken
-                //            "Content-Type": "application/x-www-form-urlencoded"
-            ]
-            let request = AF.request(AppConstant.HTTP.API.ADD_TO_CART, method:.post, parameters: parameters, encoding: JSONEncoding.default, headers: headers)
-            request.responseDecodable(of: ModelSuccessAddToCartData.self) {response in
-                debugPrint("DEBUG_LOG_PRINT: response data url \(String(describing: response.request)) line: \(#line)")
-                guard let responseData = response.value else {
-                    debugPrint("DEBUG_LOG_PRINT: data error \(String(describing: response.error)) line: \(#line)")
-                    DispatchQueue.main.async() {
-                        self.onEventListenerForAddToCartBuy!(false, "Error")
-                    }
-                    return
-                }
-                debugPrint("DEBUG_LOG_PRINT: data \(String(describing: responseData)) line: \(#line)")
-                DispatchQueue.main.async() {
-                    self.onEventListenerForAddToCartBuy!(false, "Success")
-                }
-            }
-        } catch let error as NSError {
-            print("Failed to load: \(error.localizedDescription)")
-            onEventListenerForAddToCartBuy!(true, "Error")
-        }
     }
 }
 //public enum HTTPResult<T: RawRepresentable> {
