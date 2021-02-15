@@ -27,6 +27,11 @@ public class AlamofireKit {
     private var imageData: Data!
     private var mimeType: String!
     //
+//    public static var isDebug = false
+    public static var isDebug: Bool = false {
+        get{return ownIsDebug}
+        set {ownIsDebug = newValue}
+    }
     
     public init() {
         headers = nil
@@ -38,7 +43,6 @@ public class AlamofireKit {
     //
     public func headers(headers argHTTPHeaders: HTTPHeaders) -> AlamofireKit {
         headers = argHTTPHeaders
-        headers["Content-type"] = "multipart/form-data"
         return self
     }
     public func addParameter(key: String, value: String) -> AlamofireKit {
@@ -66,13 +70,17 @@ public class AlamofireKit {
         request.responseJSON { response in
             //            debugPrint("DEBUG_LOG_PRINT: response data url \(String(describing: response.request)) line: \(#line)")
             //            debugPrint("DEBUG_LOG_PRINT: status code \(String(describing: response.response?.statusCode)) line: \(#line)")
-            print("DEBUG_LOG_PRINT: response data url \(String(describing: response.request)) line: \(#line)")
-            print("DEBUG_LOG_PRINT: status code \(String(describing: response.response?.statusCode)) line: \(#line)")
+//            print("DEBUG_LOG_PRINT: response data url \(String(describing: response.request)) line: \(#line)")
+//            print("DEBUG_LOG_PRINT: status code \(String(describing: response.response?.statusCode)) line: \(#line)")
+            ownDebugLog(object: self, message: "REQUEST_DATA: " + response.request)
+            ownDebugLog(object: self, message: "STATUS_CODE: " + response.response?.statusCode)
             guard let responseData = response.value else {
-                print("DEBUG_LOG_PRINT: data error \(String(describing: response.error)) line: \(#line)")
+//                print("DEBUG_LOG_PRINT: data error \(String(describing: response.error)) line: \(#line)")
+                ownDebugLog(object: self, message: "ERROR_DATA: " + response.error)
                 return
             }
-            print("DEBUG_LOG_PRINT: data success \(responseData) line: \(#line)")
+//            print("DEBUG_LOG_PRINT: data success \(responseData) line: \(#line)")
+            ownDebugLog(object: self, message: "REQUEST_DATA_IN_JSON: " + responseData)
         }
     }
     public typealias Completion<T> = (_ success: Bool, _ data: T) -> Void
@@ -89,9 +97,9 @@ public class AlamofireKit {
                                              interceptor: RequestInterceptor? = nil,
                                              requestModifier: RequestModifier? = nil) {
         let request = AF.request(convertible, method: method, parameters: parameters, encoding: encoding, headers: headers)
-        request.responseDecodable(of: dataModel.self) { (response) in
-            print("DEBUG_LOG_PRINT: request url \(String(describing: response.request)) line: \(#line)")
-            print("DEBUG_LOG_PRINT: status code \(String(describing: response.response?.statusCode)) line: \(#line)")
+        request.responseDecodable(of: dataModel.self) {response in
+            ownDebugLog(object: self, message: "REQUEST_DATA: " + response.request)
+            ownDebugLog(object: self, message: "STATUS_CODE: " + response.response?.statusCode)
             guard let responseData = response.value else {
                 completion(false, nil, response.error)
                 return
@@ -132,18 +140,6 @@ public enum HTTPResult<Success, Failure> {
 public enum HTTPError: Error {
     case error(Error)
 }
-//public enum HTTPResult<T: RawRepresentable> {
-//    case success(T)
-//    case failure(T)
-//}
-//public enum Result<Success, Failure> where Failure : Error {
-//public enum DataError: Error {
-//    case invalid
-//}
-//public struct ModelTest {
-//    var name: String
-//}
-//
 extension AlamofireKit {
     public func withImageName(imageName argImageName: String) -> AlamofireKit {
         imageName = argImageName
@@ -167,6 +163,10 @@ extension AlamofireKit {
         imageQuality = argImageQuality
         return self
     }
+    public func withUIImage(uiImage argUIImage: UIImage, imageQuality argImageQuality: CGFloat) -> AlamofireKit {
+        uiImage = argUIImage
+        return self
+    }
     //
     private func onLoadImagePng() {
         #if swift(>=4.2)
@@ -183,27 +183,30 @@ extension AlamofireKit {
         #endif
     }
     //
-    public func uploadImage<T: Decodable>(_ completion: @escaping (_ success: Bool, _ data: T?, _ error: Error?) -> Void, dataModel: T.Type, _ convertible: URLConvertible, cropSize: CGSize) {
+    public func requestImage<T: Decodable>(_ completion: @escaping (_ success: Bool, _ data: T?, _ error: Error?) -> Void, dataModel: T.Type, _ convertible: URLConvertible, cropSize: CGSize) {
         //        imageView = UIImageView(image: imageView.image?.crop(cropTo: cropSize))
         uiImage = uiImage.resizeImage(resizeTo: cropSize)
-        uploadImage(completion, dataModel: dataModel, convertible)
+        requestImage(completion, dataModel: dataModel, convertible)
     }
     //START uploadImage
-    public func uploadImage<T: Decodable>(_ completion: @escaping (_ success: Bool, _ data: T?, _ error: Error?) -> Void, dataModel: T.Type, _ convertible: URLConvertible) {
+    public func requestImage<T: Decodable>(_ completion: @escaping (_ success: Bool, _ data: T?, _ error: Error?) -> Void, dataModel: T.Type, _ convertible: URLConvertible) {
         //        headerList["Content-type"] = "multipart/form-data"
         //        for (key, value) in headerList {
         //            headers[key] = value as? String
         //        }
+        headers["Content-type"] = "multipart/form-data"
         httpURL = convertible
-        print("DEBUG_PRINT: FINAL HEADERS \(String(describing: headers))")
-        print("DEBUG_PRINT: FINAL PARAMS \(String(describing: parameters))")
-        print("DEBUG_PRINT: FINAL URL \(String(describing: convertible))")
+//        print("DEBUG_PRINT: FINAL HEADERS \(String(describing: headers))")
+//        print("DEBUG_PRINT: FINAL PARAMS \(String(describing: parameters))")
+//        print("DEBUG_PRINT: FINAL URL \(String(describing: convertible))")
         if imageName == nil {
-            print("Error: upload image name is empty")
+//            print("Error: upload image name is empty")
+            ownDebugLog(object: self, message: "Error: upload image name is empty")
             return
         }
         if imageFileName == nil {
-            print("Error: upload image file name is empty")
+//            print("Error: upload image file name is empty")
+            ownDebugLog(object: self, message: "Error: upload image file name is empty")
             return
         }
 //        imageFileName = imageFileName + ".png"
@@ -257,7 +260,8 @@ extension AlamofireKit {
                 case .success(_):
                     //                    print("DEBUG_PRINT: Response after upload Img: \(result.data?.jsonString())")
                     if let jsonString = String(data: result.data!, encoding: String.Encoding.utf8) {
-                        print("DEBUG_PRINT: response after upload image: \(jsonString)")
+//                        print("DEBUG_PRINT: response after upload image: \(jsonString)")
+                        ownDebugLog(object: self, message: "RAW_DATA" + jsonString)
                     }
                     do {
                         let data = try JSONDecoder().decode(dataModel.self, from: result.data!)
@@ -290,3 +294,47 @@ extension AlamofireKit {
     }
     //https://github.com/Alamofire/Alamofire/issues/2942
 }
+extension AlamofireKit {
+    public func requestJSON() {
+        do {
+            let jsonAddToCart = try JSONSerialization.jsonObject(with: dataAddToCart, options: [])
+            let parameters: [String: Any] = [
+                "cart_items": jsonAddToCart
+            ]
+            let headers: HTTPHeaders = [
+                AppConstant.API_KEY_TOKEN.AUTHORIZATION: argAccessToken
+                //            "Content-Type": "application/x-www-form-urlencoded"
+            ]
+            let request = AF.request(AppConstant.HTTP.API.ADD_TO_CART, method:.post, parameters: parameters, encoding: JSONEncoding.default, headers: headers)
+            request.responseDecodable(of: ModelSuccessAddToCartData.self) {response in
+                debugPrint("DEBUG_LOG_PRINT: response data url \(String(describing: response.request)) line: \(#line)")
+                guard let responseData = response.value else {
+                    debugPrint("DEBUG_LOG_PRINT: data error \(String(describing: response.error)) line: \(#line)")
+                    DispatchQueue.main.async() {
+                        self.onEventListenerForAddToCartBuy!(false, "Error")
+                    }
+                    return
+                }
+                debugPrint("DEBUG_LOG_PRINT: data \(String(describing: responseData)) line: \(#line)")
+                DispatchQueue.main.async() {
+                    self.onEventListenerForAddToCartBuy!(false, "Success")
+                }
+            }
+        } catch let error as NSError {
+            print("Failed to load: \(error.localizedDescription)")
+            onEventListenerForAddToCartBuy!(true, "Error")
+        }
+    }
+}
+//public enum HTTPResult<T: RawRepresentable> {
+//    case success(T)
+//    case failure(T)
+//}
+//public enum Result<Success, Failure> where Failure : Error {
+//public enum DataError: Error {
+//    case invalid
+//}
+//public struct ModelTest {
+//    var name: String
+//}
+//
