@@ -28,6 +28,14 @@ public class AlamofireKit {
     private var mimeType: String!
     //
 //    public static var isDebug = false
+//    public static var isDebug: Bool {
+//        get{return ownIsDebug}
+//        set {ownIsDebug = newValue}
+//    }
+    public var setDebugLog: Bool {
+        get{return ownIsDebug}
+        set {ownIsDebug = newValue}
+    }
     public static var isDebug: Bool {
         get{return ownIsDebug}
         set {ownIsDebug = newValue}
