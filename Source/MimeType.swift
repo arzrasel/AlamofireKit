@@ -57,10 +57,10 @@ extension URL {
         }
         return UTTypeConformsTo(uti, kUTTypeMovie)
     }
-    
+
     //Get current mime type of url w.r.t its url
     var currentMimeType: String {
-        
+
         if self.containsImage{
             return "image/png"
         }else if self.containsAudio{
@@ -68,7 +68,7 @@ extension URL {
         }else if self.containsVideo{
             return "video/mp4"
         }
-        
+
         return ""
     }
     //https://stackoverflow.com/questions/31243371/path-extension-and-mime-type-of-file-in-swift
@@ -90,13 +90,13 @@ internal func ownDebugLog(object: Any, message: String, functionName: String = #
     let className = (fileName as NSString).lastPathComponent
     print("DEBUG_LOG_PRINT: " + message + " <\(className)> \(functionName) [\(lineNumber)] | \(object)")
 }
-public func debugLog(object: Any, message: String, functionName: String = #function, fileName: String = #file, lineNumber: Int = #line) {
-    if ownIsDebug == false {
-        return
-    }
-    let className = (fileName as NSString).lastPathComponent
-    print("DEBUG_LOG_PRINT: " + message + " <\(className)> \(functionName) [\(lineNumber)] | \(object)")
-}
+//public func debugLog(object: Any, message: String, functionName: String = #function, fileName: String = #file, lineNumber: Int = #line) {
+//    if ownIsDebug == false {
+//        return
+//    }
+//    let className = (fileName as NSString).lastPathComponent
+//    print("DEBUG_LOG_PRINT: " + message + " <\(className)> \(functionName) [\(lineNumber)] | \(object)")
+//}
 //#if swift(>=5.3)
 //print("Hello, Swift 5.3")
 //
