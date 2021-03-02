@@ -17,12 +17,12 @@
 #   * [pod lib lint --allow-warnings --no-clean --verbose]
 #   * Push to git and release
 #   * pod trunk push --allow-warnings ORRR>> pod trunk push AlamofireKit.podspec --allow-warnings
-# AlamofireKit Version - 0.1.1.05
+# AlamofireKit Version - 1.0.1
 
 
 Pod::Spec.new do |s|
   s.name             = 'AlamofireKit'
-  s.version          = '0.1.1.05'
+  s.version          = '1.0.1'
   s.summary          = 'A short description of AlamofireKit.'
 
 # This description is used to generate tags and improve search results.
