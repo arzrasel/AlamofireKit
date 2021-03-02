@@ -80,15 +80,15 @@ public class AlamofireKit {
             //            debugPrint("DEBUG_LOG_PRINT: status code \(String(describing: response.response?.statusCode)) line: \(#line)")
 //            print("DEBUG_LOG_PRINT: response data url \(String(describing: response.request)) line: \(#line)")
 //            print("DEBUG_LOG_PRINT: status code \(String(describing: response.response?.statusCode)) line: \(#line)")
-            ownDebugLog(object: self, message: "REQUEST_DATA: \(String(describing: response.request))")
-            ownDebugLog(object: self, message: "STATUS_CODE: \(String(describing: response.response?.statusCode))")
+            ownDebugLog(object: self, message: "REQUEST_URL: \(String(describing: response.request))")
+            ownDebugLog(object: self, message: "RESPONSE_STATUS_CODE: \(String(describing: response.response?.statusCode))")
             guard let responseData = response.value else {
 //                print("DEBUG_LOG_PRINT: data error \(String(describing: response.error)) line: \(#line)")
                 ownDebugLog(object: self, message: "ERROR_DATA: \(String(describing: response.error))")
                 return
             }
 //            print("DEBUG_LOG_PRINT: data success \(responseData) line: \(#line)")
-            ownDebugLog(object: self, message: "REQUEST_DATA_IN_JSON: \(String(describing: responseData))")
+            ownDebugLog(object: self, message: "RESPONSE_DATA: \(String(describing: responseData))")
         }
     }
     public typealias Completion<T> = (_ success: Bool, _ data: T) -> Void
@@ -106,8 +106,8 @@ public class AlamofireKit {
                                              requestModifier: RequestModifier? = nil) {
         let request = AF.request(convertible, method: method, parameters: parameters, encoding: encoding, headers: headers)
         request.responseDecodable(of: dataModel.self) {response in
-            ownDebugLog(object: self, message: "REQUEST_DATA: \(String(describing: response.request))")
-            ownDebugLog(object: self, message: "STATUS_CODE: \(String(describing: response.response?.statusCode))")
+            ownDebugLog(object: self, message: "REQUEST_URL: \(String(describing: response.request))")
+            ownDebugLog(object: self, message: "RESPONSE_STATUS_CODE: \(String(describing: response.response?.statusCode))")
             guard let responseData = response.value else {
                 completion(false, nil, response.error)
                 return
