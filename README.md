@@ -9,7 +9,7 @@
 [![Swift](https://img.shields.io/badge/Swift-5.0-orange.svg)](https://swift.org)
 [![Xcode](https://img.shields.io/badge/Xcode-11.4-blue.svg)](https://developer.apple.com/xcode)
 
-### AlamofireKit latest version - 0.1.1.01 and upcoming next version - 0.1.1.02
+<!--### AlamofireKit latest version - 0.1.1.01 and upcoming next version - 0.1.1.02-->
 
 ## Example
 
@@ -31,7 +31,7 @@ pod 'AlamofireKit'
 ```
 or
 ```podInstallAlamofireKit02
-pod 'AlamofireKit', '~> 0.1'
+pod 'AlamofireKit', '~> 1.0'
 ```
 
 ## Integration In Project
