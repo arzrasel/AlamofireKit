@@ -5,18 +5,6 @@
 # Any lines starting with a # are optional, but their use is encouraged
 # To learn more about a Podspec see https://guides.cocoapods.org/syntax/podspec.html
 #
-# CREATE
-#   * pod lib create AlamofireKit
-#   * ios>swift>yes>None>No
-#   * Push to git and release
-#   * pod trunk register rashedgit@gmail.com 'Rz Rasel'
-#   * pod lib lint AlamofireKit.podspec --allow-warnings
-#   * pod trunk push --allow-warnings
-# UPDATE
-#   * pod lib lint --allow-warnings
-#   * [pod lib lint --allow-warnings --no-clean --verbose]
-#   * Push to git and release
-#   * pod trunk push --allow-warnings ORRR>> pod trunk push AlamofireKit.podspec --allow-warnings
 # AlamofireKit Version - 1.0.1.01
 
 
